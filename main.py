@@ -56,6 +56,23 @@ class FontName:
         return font_name
 
 
+class FontConverter:
+    def __init__(self) -> None:
+        pass
+
+    def otf_to_ttf(self):
+        fonts = get_fonts()
+        for f in fonts:
+            font = TTFont(f"{f}.otf")
+            font.save(f"generated_fonts/{f}.ttf")
+
+    def woff_to_ttf(self):
+        fonts = get_fonts()
+        for f in fonts:
+            font = TTFont(f"{f}.woff2")
+            font.save(f"generated_fonts/{f}.ttf")
+
+
 def main():
     print("hi")
 
