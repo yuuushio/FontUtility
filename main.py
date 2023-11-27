@@ -30,7 +30,9 @@ class FontName:
         print(f"The font's actual name is: {font_name}")
 
     # This will be used to confirm whether our font renaming was successful or not.
-    def confirm_font_renames(self, font_type):
+    def confirm_font_renames(self):
+        # Hard code bc they should already been in ttf as that's our desired _to_ conversion
+        font_type = "ttf"
         for f in get_fonts():
             font = TTFont(f"generated_fonts/{f}.{font_type}")
             font_name = self._get_name_utility(font)
@@ -72,6 +74,14 @@ class FontConverter:
             font = TTFont(f"{f}.woff2")
             font.save(f"generated_fonts/{f}.ttf")
 
+    def gen_ttf(self, current_type):
+        if current_type == "otf":
+            self.otf_to_ttf()
+        elif current_type == "woff":
+            self.woff_to_ttf()
+        else:
+            print("Invalid font extension.")
+
 
 def set_font_name(family_name, font_list, font_type):
     for f in font_list:
@@ -96,7 +106,14 @@ def set_font_name(family_name, font_list, font_type):
 
 
 def main():
-    print("hi")
+    font_list = get_fonts()
+    print(font_list)
+    conv = FontConverter()
+    conv.gen_ttf(current_type="woff")
+
+    # TODO: get family_name as command line argument
+    set_font_name("Adonis", font_list, "ttf")
+    FontName().confirm_font_renames()
 
 
 if __name__ == "__main__":
