@@ -48,9 +48,9 @@
 
 p {
   margin: 0;
-  padding: 20px;
-  line-height: 1.6;
-  font-size: 20px;
+  padding: 10px;
+  line-height: 1.1;
+  font-size: 2rem;
 }
 
 .a {
@@ -59,4 +59,32 @@ p {
 
 .b {
   font-family: "b";
+}
+
+.c {
+  font-family: "c";
+}
+
+.d {
+  font-family: "d";
+}
+
+.e {
+  font-family: "e";
+}
+
+.f {
+  font-family: "f";
+}
+
+.g {
+  font-family: "g";
+}
+
+.h {
+  font-family: "h";
+}
+
+.i {
+  font-family: "i";
 }
