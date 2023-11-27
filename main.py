@@ -27,10 +27,10 @@ class FontName:
         print(f"The font's actual name is: {font_name}")
 
     # This will be used to confirm whether our font renaming was successful or not.
-    def confirm_font_renames(self):
+    def confirm_font_renames(self, font_list):
         # Hard code bc they should already been in ttf as that's our desired _to_ conversion
         font_type = "ttf"
-        for f in get_fonts():
+        for f in font_list:
             font = TTFont(f"generated_fonts/{f}.{font_type}")
             font_name = self._get_name_utility(font)
 
@@ -81,10 +81,9 @@ class FontGen:
     def __init__(self, fix_name=False) -> None:
         self.font_list = get_fonts()
         self.fix_name = fix_name
-        if self.fix_name:
-            self.fixed_file_names = self._fix_file_name()
-        else:
-            self.fixed_file_names = self.font_list
+        self.fixed_file_names = (
+            self._fix_file_name() if self.fix_name else self.font_list
+        )
 
     def set_font_name(self, family_name, font_type):
         for i in range(len(self.font_list)):
@@ -98,14 +97,12 @@ class FontGen:
             # For example, nameID 1 is the Font Family name, and nameID 2 is the Font Subfamily name
             # You'll need to replace 'New Font Family Name' and 'New Font Subfamily Name' with your desired names
             name_table.setName(family_name, 1, 3, 1, 0x409)
-            name_table.setName(self.font_list[i], 2, 3, 1, 0x409)
-            name_table.setName(self.font_list[i], 4, 3, 1, 0x409)
 
-            # Save the modified font
-            if self.fix_name:
-                font.save(f"generated_fonts/{self.fixed_file_names[i]}.{font_type}")
-            else:
-                font.save(f"generated_fonts/{self.font_list[i]}.{font_type}")
+            new_name = self.fixed_file_names[i]
+            name_table.setName(new_name, 2, 3, 1, 0x409)
+            name_table.setName(new_name, 4, 3, 1, 0x409)
+
+            font.save(f"generated_fonts/{new_name}.{font_type}")
 
             # Close the font object
             font.close()
@@ -129,7 +126,8 @@ def main():
 
     # TODO: get family_name as command line argument
     font_gen.set_font_name("Mrs Eaves", "ttf")
-    FontName().confirm_font_renames()
+    FontName().confirm_font_renames(font_gen.fixed_file_names)
+    # FontName().get_font_name(f"generated_fonts/{font_gen.fixed_file_names[0]}.ttf")
 
 
 if __name__ == "__main__":
