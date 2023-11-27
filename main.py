@@ -73,6 +73,28 @@ class FontConverter:
             font.save(f"generated_fonts/{f}.ttf")
 
 
+def set_font_name(family_name, font_list, font_type):
+    for f in font_list:
+        # Load the already generated (converted) fonts; i.e., they are of desired font format
+        font = TTFont(f"generated_fonts/{f}.{font_type}")
+
+        name_table = font["name"]
+
+        # Modify the names
+        # The entries in the naming table are referenced by their 'nameID'
+        # For example, nameID 1 is the Font Family name, and nameID 2 is the Font Subfamily name
+        # You'll need to replace 'New Font Family Name' and 'New Font Subfamily Name' with your desired names
+        name_table.setName(family_name, 1, 3, 1, 0x409)
+        name_table.setName(f, 2, 3, 1, 0x409)
+        name_table.setName(f, 4, 3, 1, 0x409)
+
+        # Save the modified font
+        font.save(f"generated_fonts/{f}.{font_type}")
+
+        # Close the font object
+        font.close()
+
+
 def main():
     print("hi")
 
