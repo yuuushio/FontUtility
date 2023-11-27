@@ -18,9 +18,6 @@ class FontName:
     when you load it into a word processing application.
     """
 
-    def __init__(self) -> None:
-        pass
-
     # There are times when the downloaded font has a garbage name (to prevent commercial use),
     #  so this function whether to see if it does.
     def get_font_name(self, font_file_path):
@@ -59,9 +56,6 @@ class FontName:
 
 
 class FontConverter:
-    def __init__(self) -> None:
-        pass
-
     def otf_to_ttf(self):
         fonts = get_fonts()
         for f in fonts:
