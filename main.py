@@ -26,18 +26,20 @@ class FontName:
     def get_font_name(self, font_file_path):
         font = TTFont(font_file_path)
         font_name = self._get_name_utility(font)
+
         print(f"The font's actual name is: {font_name}")
 
     # This will be used to confirm whether our font renaming was successful or not.
     def confirm_font_renames(self, font_type):
         for f in get_fonts():
-            font = TTFont(f"generated_fonts/{f}.font_type")
-
+            font = TTFont(f"generated_fonts/{f}.{font_type}")
             font_name = self._get_name_utility(font)
 
             print(f"The font's actual name is: {font_name}")
 
     def _get_name_utility(self, ttfont_name):
+        # Load the font
+        # The 'name' table contains various strings, including the font name
         name_table = ttfont_name["name"]
 
         # Iterate over the name records
