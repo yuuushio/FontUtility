@@ -1,0 +1,9 @@
+mrs_eaves_basic_all_petite_caps
+mrs_eaves_basic_petite_caps
+mrs_eaves_basic_roman_lining
+mrs_eaves_basic_small_all_caps
+mrs_eaves_basic_small_caps
+mrs_eaves_bold_italic
+mrs_eaves_bold
+mrs_eaves_italic
+mrs_eaves_roman

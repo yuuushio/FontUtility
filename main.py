@@ -81,12 +81,12 @@ class FontGen:
     def __init__(self, fix_name=False) -> None:
         self.font_list = get_fonts()
         self.fix_name = fix_name
-        if fix_name:
+        if self.fix_name:
             self.fixed_file_names = self._fix_file_name()
         else:
             self.fixed_file_names = self.font_list
 
-    def set_font_name(self, family_name, font_list, font_type):
+    def set_font_name(self, family_name, font_type):
         for i in range(len(self.font_list)):
             # Load the already generated (converted) fonts; i.e., they are of desired font format
             font = TTFont(f"generated_fonts/{self.font_list[i]}.{font_type}")
@@ -113,8 +113,9 @@ class FontGen:
     def _fix_file_name(self):
         new_font_list = []
         for f in self.font_list:
+            print(f)
             refined_font_name = f.replace("_", " ").title()
-            new_font_list += refined_font_name
+            new_font_list.append(refined_font_name)
         return new_font_list
 
 
@@ -124,10 +125,10 @@ def main():
     conv = FontConverter()
     conv.gen_ttf(current_type="woff")
 
-    font_gen = FontGen(fix_name=False)
+    font_gen = FontGen(fix_name=True)
 
     # TODO: get family_name as command line argument
-    font_gen.set_font_name("Adonis", font_list, "ttf")
+    font_gen.set_font_name("Mrs Eaves", "ttf")
     FontName().confirm_font_renames()
 
 
