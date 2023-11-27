@@ -1,7 +1,6 @@
 @font-face {
   font-family: "a";
-  src: url("generated_fonts/Mrs Eaves Basic All Petite Caps.ttf")
-    format("truetype");
+  src: url("generated_fonts/Mrs Eaves Basic All Petite Caps.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,14 +10,12 @@
 
 @font-face {
   font-family: "c";
-  src: url("generated_fonts/Mrs Eaves Basic Roman Lining.ttf")
-    format("truetype");
+  src: url("generated_fonts/Mrs Eaves Basic Roman Lining.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "d";
-  src: url("generated_fonts/Mrs Eaves Basic Small All Caps.ttf")
-    format("truetype");
+  src: url("generated_fonts/Mrs Eaves Basic Small All Caps.ttf") format("truetype");
 }
 
 @font-face {
@@ -46,17 +43,3 @@
   src: url("generated_fonts/Mrs Eaves Roman.ttf") format("truetype");
 }
 
-p {
-  margin: 0;
-  padding: 20px;
-  line-height: 1.6;
-  font-size: 20px;
-}
-
-.a {
-  font-family: "a";
-}
-
-.b {
-  font-family: "b";
-}
