@@ -77,26 +77,45 @@ class FontConverter:
             print("Invalid font extension.")
 
 
-def set_font_name(family_name, font_list, font_type):
-    for f in font_list:
-        # Load the already generated (converted) fonts; i.e., they are of desired font format
-        font = TTFont(f"generated_fonts/{f}.{font_type}")
+class FontGen:
+    def __init__(self, fix_name=False) -> None:
+        self.font_list = get_fonts()
+        self.fix_name = fix_name
+        if fix_name:
+            self.fixed_file_names = self._fix_file_name()
+        else:
+            self.fixed_file_names = self.font_list
 
-        name_table = font["name"]
+    def set_font_name(self, family_name, font_list, font_type):
+        for i in range(len(self.font_list)):
+            # Load the already generated (converted) fonts; i.e., they are of desired font format
+            font = TTFont(f"generated_fonts/{self.font_list[i]}.{font_type}")
 
-        # Modify the names
-        # The entries in the naming table are referenced by their 'nameID'
-        # For example, nameID 1 is the Font Family name, and nameID 2 is the Font Subfamily name
-        # You'll need to replace 'New Font Family Name' and 'New Font Subfamily Name' with your desired names
-        name_table.setName(family_name, 1, 3, 1, 0x409)
-        name_table.setName(f, 2, 3, 1, 0x409)
-        name_table.setName(f, 4, 3, 1, 0x409)
+            name_table = font["name"]
 
-        # Save the modified font
-        font.save(f"generated_fonts/{f}.{font_type}")
+            # Modify the names
+            # The entries in the naming table are referenced by their 'nameID'
+            # For example, nameID 1 is the Font Family name, and nameID 2 is the Font Subfamily name
+            # You'll need to replace 'New Font Family Name' and 'New Font Subfamily Name' with your desired names
+            name_table.setName(family_name, 1, 3, 1, 0x409)
+            name_table.setName(self.font_list[i], 2, 3, 1, 0x409)
+            name_table.setName(self.font_list[i], 4, 3, 1, 0x409)
 
-        # Close the font object
-        font.close()
+            # Save the modified font
+            if self.fix_name:
+                font.save(f"generated_fonts/{self.fixed_file_names[i]}.{font_type}")
+            else:
+                font.save(f"generated_fonts/{self.font_list[i]}.{font_type}")
+
+            # Close the font object
+            font.close()
+
+    def _fix_file_name(self):
+        new_font_list = []
+        for f in self.font_list:
+            refined_font_name = f.replace("_", " ").title()
+            new_font_list += refined_font_name
+        return new_font_list
 
 
 def main():
@@ -105,8 +124,10 @@ def main():
     conv = FontConverter()
     conv.gen_ttf(current_type="woff")
 
+    font_gen = FontGen(fix_name=False)
+
     # TODO: get family_name as command line argument
-    set_font_name("Adonis", font_list, "ttf")
+    font_gen.set_font_name("Adonis", font_list, "ttf")
     FontName().confirm_font_renames()
 
 
