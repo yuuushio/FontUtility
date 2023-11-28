@@ -1,5 +1,7 @@
+from fontTools.misc.textTools import string
 from fontTools.ttLib import TTFont
 from fontTools.varLib.models import main
+import argparse
 
 
 # Get the list of fonts. This uses their file name, not their actual font name.
@@ -116,18 +118,38 @@ class FontGen:
         return new_font_list
 
 
+def handle_arguments():
+    parser = argparse.ArgumentParser(
+        prog="FontUtility",
+        description="Coverts downloaded fonts and changes their internal name.",
+    )
+
+    parser.add_argument(
+        "--current_type",
+        type=str,
+        help="Font file's current extension/type (woff/otf)",
+    )
+    parser.add_argument(
+        "--fix_name",
+        action="store_false",
+        help="True to fix file/font name from snake case to normal. Default: False",
+    )
+    parser.add_argument("--family_name", type=str, help="Font family name.")
+
+    return parser.parse_args()
+
+
 def main():
     font_list = get_fonts()
     print(font_list)
     conv = FontConverter()
-    conv.gen_ttf(current_type="woff")
+    args = handle_arguments()
+    conv.gen_ttf(current_type=str(args.current_type))
 
-    font_gen = FontGen(fix_name=True)
+    font_gen = FontGen(fix_name=args.fix_name)
 
-    # TODO: get family_name as command line argument
-    font_gen.set_font_name("Mrs Eaves", "ttf")
+    font_gen.set_font_name(str(args.family_name), "ttf")
     FontName().confirm_font_renames(font_gen.fixed_file_names)
-    # FontName().get_font_name(f"generated_fonts/{font_gen.fixed_file_names[0]}.ttf")
 
 
 if __name__ == "__main__":
