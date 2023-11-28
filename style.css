@@ -1,49 +1,21 @@
 @font-face {
   font-family: "a";
-  src: url("generated_fonts/Mrs Eaves Basic All Petite Caps.ttf")
-    format("truetype");
+  src: url("generated_fonts/Tribute Roman Gly.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "b";
-  src: url("generated_fonts/Mrs Eaves Basic Petite Caps.ttf") format("truetype");
+  src: url("generated_fonts/Tribute Roman Italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "c";
-  src: url("generated_fonts/Mrs Eaves Basic Roman Lining.ttf")
-    format("truetype");
+  src: url("generated_fonts/Tribute Roman.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "d";
-  src: url("generated_fonts/Mrs Eaves Basic Small All Caps.ttf")
-    format("truetype");
-}
-
-@font-face {
-  font-family: "e";
-  src: url("generated_fonts/Mrs Eaves Basic Small Caps.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "f";
-  src: url("generated_fonts/Mrs Eaves Bold Italic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "g";
-  src: url("generated_fonts/Mrs Eaves Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "h";
-  src: url("generated_fonts/Mrs Eaves Italic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "i";
-  src: url("generated_fonts/Mrs Eaves Roman.ttf") format("truetype");
+  src: url("test.ttf") format("truetype");
 }
 
 p {
@@ -51,40 +23,62 @@ p {
   padding: 10px;
   line-height: 1.1;
   font-size: 2rem;
+  font-family: "b";
+  font-variant-ligatures: common-ligatures;
 }
 
 .a {
   font-family: "a";
+  /* font-style: italic; */
 }
 
 .b {
   font-family: "b";
+
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings:
+    "ligs" 1,
+    "clig" 1,
+    "dlig" 1,
+    "frac" 1;
 }
 
 .c {
   font-family: "c";
+
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings:
+    "ligs" 1,
+    "clig" 1,
+    "dlig" 1,
+    "frac" 1;
 }
 
-.d {
+p.dlig {
+  font-feature-settings: "dlig";
+}
+p.onum {
+  font-feature-settings: "onum";
+}
+p.lnum {
+  font-feature-settings: "lnum";
+}
+p.tnum-onum {
+  font-feature-settings: "tnum", "onum";
+}
+p.tnum-lnum {
+  font-feature-settings: "tnum", "lnum";
+}
+p.sups {
+  font-feature-settings: "sups";
+}
+p.subs {
+  font-feature-settings: "subs";
+}
+p.frac {
+  font-feature-settings: "frac";
+}
+
+p.d {
   font-family: "d";
-}
-
-.e {
-  font-family: "e";
-}
-
-.f {
-  font-family: "f";
-}
-
-.g {
-  font-family: "g";
-}
-
-.h {
-  font-family: "h";
-}
-
-.i {
-  font-family: "i";
 }

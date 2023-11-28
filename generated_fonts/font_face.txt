@@ -1,45 +1,15 @@
 @font-face {
-  font-family: "a";
-  src: url("generated_fonts/Mrs Eaves Basic All Petite Caps.ttf") format("truetype");
+  font-family: " ";
+  src: url("generated_fonts/Tribute Roman Gly.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "b";
-  src: url("generated_fonts/Mrs Eaves Basic Petite Caps.ttf") format("truetype");
+  font-family: " ";
+  src: url("generated_fonts/Tribute Roman Italic.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "c";
-  src: url("generated_fonts/Mrs Eaves Basic Roman Lining.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "d";
-  src: url("generated_fonts/Mrs Eaves Basic Small All Caps.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "e";
-  src: url("generated_fonts/Mrs Eaves Basic Small Caps.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "f";
-  src: url("generated_fonts/Mrs Eaves Bold Italic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "g";
-  src: url("generated_fonts/Mrs Eaves Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "h";
-  src: url("generated_fonts/Mrs Eaves Italic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "i";
-  src: url("generated_fonts/Mrs Eaves Roman.ttf") format("truetype");
+  font-family: " ";
+  src: url("generated_fonts/Tribute Roman.ttf") format("truetype");
 }
 
