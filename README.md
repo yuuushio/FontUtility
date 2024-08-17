@@ -4,6 +4,15 @@ A Python tool that converts font files between various formats, and renames them
 
 Essentially a pipeline to refine a garbage [cURL'd] font file. Better than loading each font separately in FontForge and changing the name in the table.
 
+## Troubleshooting
+
+- Download using `curl`, but remove the `if-modified-since` header/line.
+
+- If `curl` isn't working, use `wget`---the following headers/options need to be present otherwise you'll get an invalid file:
+    - `--user-agent`
+    - `--referer`
+
+
 Issues/TODO:
 
 - There's a separate table entry for the name displayed on Mac...

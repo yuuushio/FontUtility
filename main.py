@@ -142,14 +142,19 @@ def handle_arguments():
 def main():
     font_list = get_fonts()
     print(font_list)
-    conv = FontConverter()
-    args = handle_arguments()
-    conv.gen_ttf(current_type=str(args.current_type))
 
-    font_gen = FontGen(fix_name=args.fix_name)
-
-    font_gen.set_font_name(str(args.family_name), "ttf")
-    FontName().confirm_font_renames(font_gen.fixed_file_names)
+    for f in font_list:
+        font = TTFont(f"{f}.woff2")
+        font.save(f"generated_fonts/{f}.ttf")
+    # conv = FontConverter()
+    # args = handle_arguments()
+    # conv.gen_ttf(current_type=str(args.current_type))
+    FontName().get_font_name("generated_fonts/t.ttf")
+    #
+    # font_gen = FontGen(fix_name=args.fix_name)
+    #
+    # font_gen.set_font_name(str(args.family_name), "ttf")
+    # FontName().confirm_font_renames(font_gen.fixed_file_names)
 
 
 if __name__ == "__main__":
