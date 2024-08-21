@@ -5,8 +5,10 @@ from pathlib import Path
 Name ID 0: Copyright notice.
 Name ID 1: Font Family name.
 Name ID 3: Unique font identifier.
+Name ID 7: Trademark.
 Name ID 8: Manufacturer name.
 Name ID 9: Designer name.
+Name ID 10: Description.
 Name ID 11: URL of the vendor.
 Name ID 13: License description.
 Name ID 14: License information URL.
@@ -31,7 +33,7 @@ def rm_id_of_font(font_name):
     for record in name_table.names:
 
         print(record.nameID, record.toStr())
-        if record.nameID in [0, 8, 9, 11, 13, 10, 12, 14]:
+        if record.nameID in [0, 7, 8, 9, 10, 11, 13, 10, 12, 14]:
             records_to_remove.append(record)
 
     # Remove the collected records

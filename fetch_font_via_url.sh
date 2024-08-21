@@ -1,6 +1,6 @@
 #! /bin/bash
 
-curl -O 'https://d14810e2jnirzn.cloudfront.net/media/fonts/179400d9-079c-443a-9e72-8092fd2d9b8f.woff2' \
+curl -O 'https://d14810e2jnirzn.cloudfront.net/media/fonts/d6a0b85e-a4b4-4741-b8d4-2a59fa9ff225.woff2' \
   -H 'accept: */*' \
   -H 'accept-language: en-GB,en;q=0.6' \
   -H 'cache-control: no-cache' \
