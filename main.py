@@ -64,6 +64,27 @@ def write_names(file_type):
     f.close()
 
 
+def ensure_directories_exist(ttf_path, woff_path):
+    if not ttf_path.exists():
+        ttf_path.mkdir(parents=True, exist_ok=True)
+    if not woff_path.exists():
+        woff_path.mkdir(parents=True, exist_ok=True)
+
+
+def set_output_dirs(f_name):
+    op_dir_ttf = Path(f"./{f_name}/ttf")
+    op_dir_woff = Path(f"./{f_name}/woff2")
+    ensure_directories_exist(op_dir_ttf, op_dir_woff)
+    return op_dir_ttf, op_dir_woff
+
+
+def save_fonts(font, ttf_path, woff_path):
+    font.flavor = None
+    font.save(ttf_path)
+    font.flavor = "woff2"
+    font.save(woff_path)
+
+
 def set_font_names(font, f_name, sub_f_name):
 
     # To change the name for all platforms, because each platforms seems to have their own name table.
@@ -104,25 +125,15 @@ run is just so much easier.
 """
 
 
-def ensure_directories_exist(ttf_path, woff_path):
-    if not ttf_path.exists():
-        ttf_path.mkdir(parents=True, exist_ok=True)
-    if not woff_path.exists():
-        woff_path.mkdir(parents=True, exist_ok=True)
-
-
 def main_operation():
     for f in get_file_names("woff2"):
         cleaned_name = get_and_fix_names(f)
         f_name, sub_f_name = gen_names(cleaned_name)
+        ttf_path, woff_path = set_output_dirs(f_name)
+
         font = TTFont(f)
-        set_font_names(f, f_name, sub_f_name)
-        op_dir_ttf = Path(f"./{f_name}/ttf")
-        op_dir_woff = Path(f"./{f_name}/woff2")
-        font.flavor = None
-        font.save(op_dir_ttf)
-        font.flavor = "woff2"
-        font.save(op_dir_woff)
+        set_font_names(font, f_name, sub_f_name)
+        save_fonts(font, ttf_path, woff_path)
 
 
 def pipeline(operations):
