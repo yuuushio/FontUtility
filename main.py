@@ -6,33 +6,23 @@ from fontTools.ttLib import TTFont
 from fontTools.varLib.models import main
 
 
-def get_and_fix_names(file_type):
-    font_file_names = [
-        f.name
-        for f in Path(".").iterdir()
-        if f.is_file() and f.suffix == f".{file_type}"
-    ]
-    new_fl = []
-    for f in font_file_names:
-        f = f.replace("-", " ")
-        f = f.replace("_", " ")
-        f = f.removesuffix(f".{file_type}")
-        f = f.title()
-        f = f + "\n"
-        new_fl.append(f)
-
-    print("font file names::", font_file_names)
-    print("cleaned names::", new_fl)
-    return new_fl
+# Generate font files
+def get_file_names(file_type):
+    for f in Path(".").iterdir():
+        if f.is_file() and f.suffix == f".{file_type}":
+            yield f.name
 
 
-# input: file-type of the file without the `.`
-def write_names(file_type):
-    font_file_names = get_and_fix_names(file_type)
-    with open("fonts.txt", "w") as f:
-        f.writelines(font_file_names)
-
-    f.close()
+def gen_sub_f_name(secnd_partition):
+    lc = secnd_partition.lower()
+    # It just makes sense to have the logic like this (from reading perspective)
+    if "regular" in lc:
+        if "italic" in lc:
+            return "italic".title()
+        else:
+            return "regular".title()
+    else:
+        return secnd_partition
 
 
 # Rule:
@@ -41,11 +31,44 @@ def write_names(file_type):
 #   it should be renamed to `GTPressuraMono-Bold-Italic`
 
 
-def subfamily_name(font):
-    pass
+def gen_names(font):
+    pf = font.partition(" ")
+    fam_name = pf[0]
+    sub_f_name = gen_sub_f_name(pf[2])
+    return fam_name, sub_f_name
 
 
-def set_font_names(font, f_name, sub_f_name):
+def get_and_fix_names(file_type):
+    # new_fl = []
+    for f in get_file_names(file_type):
+        f = f.replace("-", " ")
+        f = f.replace("_", " ")
+        f = f.removesuffix(f".{file_type}")
+        f = f.title()
+        # f = f + "\n"
+        yield f
+
+    # print("font file names::", font_file_names)
+    # print("cleaned names::", new_fl)
+    # return new_fl
+
+
+def _test_gen_names():
+    for f in get_and_fix_names("woff2"):
+        print(gen_names(f))
+
+
+# input: file-type of the file without the `.`
+def write_names(file_type):
+    font_file_names = get_and_fix_names(file_type)
+    with open("fonts.txt", "w") as f:
+        f.writelines([f"{font_name}\n" for font_name in get_and_fix_names(file_type)])
+    print("Result written to file - fonts.txt")
+    f.close()
+
+
+def set_font_names(font):
+    f_name, sub_f_name = gen_names(font)
 
     # To change the name for all platforms, because each platforms seems to have their own name table.
     platforms = [
@@ -76,10 +99,12 @@ def pipeline(operations):
         get_and_fix_names("woff2")
     if operations[1]:
         write_names("woff2")
+    if operations[2]:
+        _test_gen_names()
 
 
 def main():
-    pipeline([0, 1])
+    pipeline([0, 1, 1])
 
 
 if __name__ == "__main__":
