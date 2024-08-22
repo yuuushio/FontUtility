@@ -142,19 +142,19 @@ def main_operation(initial_type, op_types):
         save_fonts(font, dir_dict, final_file_name)
 
 
-def pipeline(operations):
+def pipeline(operations, initial_type):
     if operations[0]:
-        get_and_fix_names("woff2")
+        get_and_fix_names(initial_type)
     if operations[1]:
-        write_names("woff2")
+        write_names(initial_type)
     if operations[2]:
-        _test_gen_names("woff2")
+        _test_gen_names(initial_type)
     if operations[3]:
-        main_operation("woff2", ["ttf", "woff2"])
+        main_operation(initial_type, ["ttf", "woff2"])
 
 
 def main():
-    pipeline([0, 0, 0, 1])
+    pipeline([0, 0, 0, 1], "woff2")
 
 
 if __name__ == "__main__":
