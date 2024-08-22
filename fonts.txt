@@ -1,6 +1,0 @@
-Pitch Light Italic
-Pitch Regular Italic
-Pitch Bold Italic
-Pitch Light
-Pitch Bold
-Pitch Regular
