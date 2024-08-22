@@ -78,11 +78,11 @@ def set_output_dirs(f_name):
     return op_dir_ttf, op_dir_woff
 
 
-def save_fonts(font, ttf_path, woff_path):
+def save_fonts(font, ttf_path, woff_path, ffn):
     font.flavor = None
-    font.save(ttf_path)
+    font.save(f"{ttf_path}/{ffn}.ttf")
     font.flavor = "woff2"
-    font.save(woff_path)
+    font.save(f"{woff_path}/{ffn}.woff2")
 
 
 def set_font_names(font, f_name, sub_f_name):
@@ -111,6 +111,10 @@ def set_font_names(font, f_name, sub_f_name):
         name_table.setName(f"{f_name} {sub_f_name}", 4, a, b, c)
 
 
+def get_final_name(cn):
+    return cn.replace(" ", "_").lower()
+
+
 """
 This is still better than turning it into a class and doing smt like
 pl.get_and_fix_names()
@@ -125,15 +129,16 @@ run is just so much easier.
 """
 
 
-def main_operation():
-    for f in get_file_names("woff2"):
+def main_operation(file_type):
+    for f in get_file_names(file_type):
         cleaned_name = get_and_fix_names(f)
         f_name, sub_f_name = gen_names(cleaned_name)
         ttf_path, woff_path = set_output_dirs(f_name)
 
         font = TTFont(f)
         set_font_names(font, f_name, sub_f_name)
-        save_fonts(font, ttf_path, woff_path)
+        final_file_name = get_final_name(cleaned_name)
+        save_fonts(font, ttf_path, woff_path, final_file_name)
 
 
 def pipeline(operations):
@@ -143,10 +148,12 @@ def pipeline(operations):
         write_names("woff2")
     if operations[2]:
         _test_gen_names("woff2")
+    if operations[3]:
+        main_operation("woff2")
 
 
 def main():
-    pipeline([0, 0, 1])
+    pipeline([0, 0, 0, 1])
 
 
 if __name__ == "__main__":
