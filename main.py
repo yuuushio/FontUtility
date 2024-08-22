@@ -64,25 +64,26 @@ def write_names(file_type):
     f.close()
 
 
-def ensure_directories_exist(ttf_path, woff_path):
-    if not ttf_path.exists():
-        ttf_path.mkdir(parents=True, exist_ok=True)
-    if not woff_path.exists():
-        woff_path.mkdir(parents=True, exist_ok=True)
+def ensure_directories_exist(*dir_paths):
+    for dir in dir_paths:
+        if not dir.exists():
+            dir.mkdir(parents=True, exist_ok=True)
 
 
-def set_output_dirs(f_name):
-    op_dir_ttf = Path(f"./{f_name}/ttf")
-    op_dir_woff = Path(f"./{f_name}/woff2")
-    ensure_directories_exist(op_dir_ttf, op_dir_woff)
-    return op_dir_ttf, op_dir_woff
+def set_output_dirs(f_name, op_types):
+    dir_dict = {}
+    for fmt in op_types:
+        dir = Path(f"./{f_name}/{fmt}")
+        dir_dict[fmt] = dir
+
+    ensure_directories_exist(*dir_dict.values())
+    return dir_dict
 
 
-def save_fonts(font, ttf_path, woff_path, ffn):
-    font.flavor = None
-    font.save(f"{ttf_path}/{ffn}.ttf")
-    font.flavor = "woff2"
-    font.save(f"{woff_path}/{ffn}.woff2")
+def save_fonts(font, dir_dict, ffn):
+    for fmt, pth in dir_dict.items():
+        font.flavor = None if fmt == "ttf" else fmt
+        font.save(f"{pth}/{ffn}.{fmt}")
 
 
 def set_font_names(font, f_name, sub_f_name):
@@ -129,16 +130,16 @@ run is just so much easier.
 """
 
 
-def main_operation(file_type):
-    for f in get_file_names(file_type):
+def main_operation(initial_type, op_types):
+    for f in get_file_names(initial_type):
         cleaned_name = get_and_fix_names(f)
         f_name, sub_f_name = gen_names(cleaned_name)
-        ttf_path, woff_path = set_output_dirs(f_name)
+        dir_dict = set_output_dirs(f_name, op_types)
 
         font = TTFont(f)
         set_font_names(font, f_name, sub_f_name)
         final_file_name = get_final_name(cleaned_name)
-        save_fonts(font, ttf_path, woff_path, final_file_name)
+        save_fonts(font, dir_dict, final_file_name)
 
 
 def pipeline(operations):
@@ -149,7 +150,7 @@ def pipeline(operations):
     if operations[2]:
         _test_gen_names("woff2")
     if operations[3]:
-        main_operation("woff2")
+        main_operation("woff2", ["ttf", "woff2"])
 
 
 def main():
