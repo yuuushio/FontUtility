@@ -1,0 +1,7 @@
+*.woff2
+
+*.ttf
+
+_buld-dl/
+
+_v1.py

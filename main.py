@@ -133,7 +133,7 @@ run is just so much easier.
 """
 
 
-def main_operation(initial_type, op_types):
+def batch_process_fonts(initial_type, op_types):
     for f in get_file_names(initial_type):
         cleaned_name = get_and_fix_names(f)
         f_name, sub_f_name = gen_names(cleaned_name)
@@ -146,19 +146,19 @@ def main_operation(initial_type, op_types):
         font.close()
 
 
-def pipeline(operations, initial_type):
+def pipeline(operations, initial_type, output_types):
     if operations[0]:
-        get_and_fix_names(initial_type)
+        get_and_fix_names(initial_type)  # ! Won't work now -- removed for loop
     if operations[1]:
-        write_names(initial_type)
+        write_names(initial_type)  # ! Won't work now
     if operations[2]:
         _test_gen_names(initial_type)
     if operations[3]:
-        main_operation(initial_type, ["ttf", "woff2"])
+        batch_process_fonts(initial_type, output_types)
 
 
 def main():
-    pipeline([0, 0, 0, 1], "woff2")
+    pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"])
 
 
 if __name__ == "__main__":
