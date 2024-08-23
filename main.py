@@ -32,6 +32,9 @@ def gen_sub_f_name(secnd_partition):
 
 
 def gen_names(font):
+    """
+    Split the font name into family name and sub-family name
+    """
     pf = font.partition(" ")
     fam_name = pf[0]
     sub_f_name = gen_sub_f_name(pf[2])
@@ -39,7 +42,6 @@ def gen_names(font):
 
 
 def get_and_fix_names(f_file):
-    # for f_file in get_file_names(file_type):
     # f_file is a of <PosixPath> type; need to get the explicit name (string)
     f = f_file.name
     f = f.replace("-", " ")
@@ -55,11 +57,12 @@ def _test_gen_names(file_type):
         print(cleaned_name, gen_names(cleaned_name))
 
 
+# [Bug]: this won't work after the change since we removed iteration of fonts get_and_fix_names
 # input: file-type of the file without the `.`
 def write_names(file_type):
-    font_file_names = get_and_fix_names(file_type)
     with open("fonts.txt", "w") as f:
-        f.writelines([f"{font_name}\n" for font_name in get_and_fix_names(file_type)])
+        pass
+        # f.writelines([f"{font_name}\n" for font_name in get_and_fix_names(file_type)])
     print("Result written to file - fonts.txt")
     f.close()
 
@@ -140,6 +143,7 @@ def main_operation(initial_type, op_types):
         set_font_names(font, f_name, sub_f_name)
         final_file_name = get_final_name(cleaned_name)
         save_fonts(font, dir_dict, final_file_name)
+        font.close()
 
 
 def pipeline(operations, initial_type):
