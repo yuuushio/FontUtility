@@ -114,6 +114,9 @@ def set_font_names(font, f_name, sub_f_name):
         # 4 for 'full font name'
         name_table.setName(f"{f_name} {sub_f_name}", 4, a, b, c)
 
+        # 6 for postscript name
+        name_table.setName(f"{f_name}_{sub_f_name}".lower(), 6, a, b, c)
+
 
 def get_final_name(cn):
     return cn.replace(" ", "_").lower()
