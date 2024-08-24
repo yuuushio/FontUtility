@@ -89,7 +89,7 @@ def save_fonts(font, dir_dict, ffn):
         font.save(f"{pth}/{ffn}.{fmt}")
 
 
-def set_font_names(font, f_name, sub_f_name):
+def set_font_names(font, f_name, sub_f_name, custom_f_name):
 
     # To change the name for all platforms, because each platforms seems to have their own name table.
     platforms = [
@@ -99,6 +99,9 @@ def set_font_names(font, f_name, sub_f_name):
     ]
 
     name_table = font["name"]
+
+    if custom_f_name[0]:
+        f_name = custom_f_name[1]
 
     # a: platform_id
     # b: platform_encoding_id
@@ -136,20 +139,27 @@ run is just so much easier.
 """
 
 
-def batch_process_fonts(initial_type, op_types):
+def batch_process_fonts(initial_type, op_types, custom_output_name):
     for f in get_file_names(initial_type):
         cleaned_name = get_and_fix_names(f)
         f_name, sub_f_name = gen_names(cleaned_name)
         dir_dict = set_output_dirs(f_name, op_types)
 
         font = TTFont(f)
-        set_font_names(font, f_name, sub_f_name)
-        final_file_name = get_final_name(cleaned_name)
+        set_font_names(font, f_name, sub_f_name, custom_output_name)
+
+        if custom_output_name[0]:
+            final_file_name = get_final_name(
+                " ".join((custom_output_name[1], sub_f_name))
+            )
+        else:
+            final_file_name = get_final_name(cleaned_name)
+
         save_fonts(font, dir_dict, final_file_name)
         font.close()
 
 
-def pipeline(operations, initial_type, output_types):
+def pipeline(operations, initial_type, output_types, custom_output_name):
     if operations[0]:
         get_and_fix_names(initial_type)  # ! Won't work now -- removed for loop
     if operations[1]:
@@ -157,11 +167,12 @@ def pipeline(operations, initial_type, output_types):
     if operations[2]:
         _test_gen_names(initial_type)
     if operations[3]:
-        batch_process_fonts(initial_type, output_types)
+        batch_process_fonts(initial_type, output_types, custom_output_name)
 
 
 def main():
-    pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"])
+    custom_output_name = [True, "AriFlare"]
+    pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"], custom_output_name)
 
 
 if __name__ == "__main__":
