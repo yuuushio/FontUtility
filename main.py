@@ -125,6 +125,16 @@ def get_final_name(cn):
     return cn.replace(" ", "_").lower()
 
 
+def validate_custom_name(cn):
+    print("Validating custom name...")
+    if isinstance(cn, str) and cn.strip():
+        print("Valid name supplied.")
+        return True
+    else:
+        print("Invalid custom name; falling back to default.")
+        return False
+
+
 """
 This is still better than turning it into a class and doing smt like
 pl.get_and_fix_names()
@@ -148,9 +158,9 @@ def batch_process_fonts(initial_type, op_types, custom_output_name):
         font = TTFont(f)
         set_font_names(font, f_name, sub_f_name, custom_output_name)
 
-        if custom_output_name[0]:
+        if validate_custom_name(custom_output_name):
             final_file_name = get_final_name(
-                " ".join((custom_output_name[1], sub_f_name))
+                " ".join((custom_output_name.strip(), sub_f_name))
             )
         else:
             final_file_name = get_final_name(cleaned_name)
@@ -171,7 +181,8 @@ def pipeline(operations, initial_type, output_types, custom_output_name):
 
 
 def main():
-    custom_output_name = [True, "AriFlare"]
+    # Set to true if you would like to pass in a custom name
+    custom_output_name = "AriFlare"
     pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"], custom_output_name)
 
 
