@@ -100,6 +100,7 @@ def set_font_names(font, f_name, sub_f_name, custom_f_name):
 
     name_table = font["name"]
 
+    print(custom_f_name[0], custom_f_name[1])
     if custom_f_name[0]:
         f_name = custom_f_name[1]
 
@@ -158,9 +159,9 @@ def batch_process_fonts(initial_type, op_types, custom_output_name):
         font = TTFont(f)
         set_font_names(font, f_name, sub_f_name, custom_output_name)
 
-        if validate_custom_name(custom_output_name):
+        if validate_custom_name(custom_output_name[1]):
             final_file_name = get_final_name(
-                " ".join((custom_output_name.strip(), sub_f_name))
+                " ".join((custom_output_name[1].strip(), sub_f_name))
             )
         else:
             final_file_name = get_final_name(cleaned_name)
@@ -182,7 +183,7 @@ def pipeline(operations, initial_type, output_types, custom_output_name):
 
 def main():
     # Set to true if you would like to pass in a custom name
-    custom_output_name = "AriFlare"
+    custom_output_name = [True, "FabrikatMono"]
     pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"], custom_output_name)
 
 

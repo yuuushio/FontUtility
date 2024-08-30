@@ -18,22 +18,22 @@ Name ID 14: License information URL.
 def get_font_list():
 
     # Get the list of .woff2 files in the current directory
-    return [f.name for f in Path('.').iterdir() if f.is_file() and f.suffix == '.woff2']
+    return [f.name for f in Path(".").iterdir() if f.is_file() and f.suffix == ".woff2"]
+
 
 def rm_id_of_font(font_name):
     font = TTFont(font_name)
     # Access the 'name' table
-    name_table = font['name']
+    name_table = font["name"]
 
     # List to keep track of records to remove
     records_to_remove = []
-
 
     # Collect the records to remove
     for record in name_table.names:
 
         print(record.nameID, record.toStr())
-        if record.nameID in [0, 7, 8, 9, 10, 11, 13, 10, 12, 14]:
+        if record.nameID in [0, 3, 7, 8, 9, 10, 11, 13, 10, 12, 14]:
             records_to_remove.append(record)
 
     # Remove the collected records
@@ -47,6 +47,7 @@ def run_removal(font_list):
     for font in font_list:
         rm_id_of_font(font)
 
+
 def run_pipeline(options_list):
     fl = get_font_list()
     if options_list[0]:
@@ -56,7 +57,8 @@ def run_pipeline(options_list):
 
 
 def main():
-    run_pipeline([1,1])
+    run_pipeline([1, 1])
+
 
 if __name__ == "__main__":
     main()
