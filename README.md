@@ -4,6 +4,28 @@ A Python tool that converts font files between various formats, and renames them
 
 Essentially a pipeline to refine a garbage [cURL'd] font file. Better than loading each font separately in FontForge and changing the name in the table.
 
+## Usage
+
+Have the font files (`.woff2`, etc.) in the local folder.
+
+The format should be dash separated in the form of:
+
+`<fontname>-<type>`
+
+e.g., `OpenSans-regular.woff2`
+
+Run the font info file to clear some default records from the internal table:
+
+```
+python font_info.py
+```
+
+Supply the new font name inside `main.py` (this will be the Font Family, as well as the new file name), and then run the `main.py` file:
+
+```
+python main.py
+```
+
 ## Attributes
 
 There are a few attributes in the font table. Some of these will be cryptic, and it will be up to you to re-set them.
@@ -21,9 +43,8 @@ There are a few attributes in the font table. Some of these will be cryptic, and
 - Download using `curl`, but remove the `if-modified-since` header/line.
 
 - If `curl` isn't working, use `wget`---the following headers/options need to be present otherwise you'll get an invalid file:
-    - `--user-agent`
-    - `--referer`
-
+  - `--user-agent`
+  - `--referer`
 
 Issues/TODO:
 

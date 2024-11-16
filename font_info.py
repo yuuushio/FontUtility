@@ -16,7 +16,6 @@ Name ID 14: License information URL.
 
 
 def get_font_list():
-
     # Get the list of .woff2 files in the current directory
     return [f.name for f in Path(".").iterdir() if f.is_file() and f.suffix == ".woff2"]
 
@@ -31,7 +30,6 @@ def rm_id_of_font(font_name):
 
     # Collect the records to remove
     for record in name_table.names:
-
         print(record.nameID, record.toStr())
         if record.nameID in [0, 3, 7, 8, 9, 10, 11, 13, 10, 12, 14]:
             records_to_remove.append(record)
