@@ -1,9 +1,0 @@
-*.woff2
-
-*.ttf
-
-_bulk-dl/
-
-_v1.py
-
-fetch_font_via_url.sh

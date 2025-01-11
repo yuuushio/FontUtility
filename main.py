@@ -184,7 +184,7 @@ def pipeline(operations, initial_type, output_types, custom_output_name):
 
 def main():
     # Set to true if you would like to pass in a custom name
-    custom_output_name = [True, "centramono"]
+    custom_output_name = [True, "eq"]
     pipeline([0, 0, 0, 1], "woff2", ["ttf", "woff2"], custom_output_name)
 
 
